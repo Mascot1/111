@@ -1,0 +1,46 @@
+#include<assert.h>
+#include<stdio.h>
+char* mystrstr(const char* p1, const char* p2)
+{
+	assert(p1 && p2);//保证指针的有效性
+	char* s1 = NULL;
+	char* s2 = NULL;
+	char* cur = (char*)p1;//因为p1是const char*所以进行强制类型转换
+	if (*p2 == '\0')//如果要查找的字串是空字符串即只有斜杠零，则返回p1
+	{
+		return (char*)p1;
+	}
+	while (*cur)
+	{
+		s1 = cur;
+		s2 = (char*)p2;
+		while (*s1 && *s2 && (*s1 == *s2))
+		{
+			s1++;
+			s2++;
+		}
+		if (*s2 == '\0')
+		{
+			return cur;//找到字串
+		}
+		cur++;
+	}
+	return NULL;
+
+
+}
+int main()
+{
+	const char *p1 = "abcdef";//常量字符串定义加一个const
+	const char *p2 = "def";
+	char *ret=mystrstr(p1, p2);
+	if (ret == NULL)
+	{
+		printf("找不到\n");
+	}
+	else
+	{
+		printf("%s\n", ret);
+	}
+	return 0;
+}
